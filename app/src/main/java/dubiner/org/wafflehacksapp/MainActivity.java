@@ -5,36 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Environment;
-import android.text.format.Formatter;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.slider.Slider;
-import com.google.gson.Gson;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import io.javalin.Javalin;
-import io.javalin.http.ContentType;
-import io.javalin.http.staticfiles.Location;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
@@ -45,27 +30,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private final int PORT = 3030;
 
-    private Map<String, Float> data;
+    public static Map<String, Float> data;
 
 
     // brian variables
-    int recordingMovement = 0;
-    boolean debugMode = false;
-    int strokeSize = 6;
+    private int recordingMovement = 0;
+    private boolean debugMode = false;
+    private int strokeWidth = 6;
     private Button button;
 
-    int mDefaultColor;
-    Button mButton;
-    int Alpha = 255;
-    int Red = 255;
-    int Green = 0;
-    int Blue = 0;
+    private int mDefaultColor;
+    private Button mButton;
+    private int alpha = 255;
+    private int red = 255;
+    private int green = 0;
+    private int blue = 0;
 
-    Button debugButton;
+    private Button debugButton;
 
-    TextView display;
-    String[] currentDisplay = new String[6];
-
+    private TextView display;
+    private String[] currentDisplay = new String[6];
+    private Server server;
 
 
     @Override
@@ -80,104 +65,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-//        Server server = new Server(PORT);
-//        String html = "";
-//        try {
-//            reader = new InputStreamReader(Resources.getSystem().openRawResource(R.raw.index),
-//                    StandardCharsets.UTF_8);
-//
-//            int data = reader.read();
-//            while (data != -1) {
-//                data = reader.read();
-//                html += (char) data;
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-//        System.out.println("html is: \n" + html);
-
-
-        Gson gson = new Gson();
         data = new LinkedHashMap<>();
-
-        data.put("r", 0f);
-        data.put("g", 0f);
-        data.put("b", 0f);
-        data.put("opacity", 0f);
-        data.put("strokeWidth", 0f);
-
-        Javalin app = Javalin.create().start(PORT);
-
-        app.get("/", ctx -> ctx.html("<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "    <head>\n" +
-                "        <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js\"></script>\n" +
-                "    </head>\n" +
-                "    <body>\n" +
-                "        <p>Hello world</p>\n" +
-                "        <div id=\"x\"></div>\n" +
-                "        <div id=\"y\"></div>\n" +
-                "        <div id=\"z\"></div>\n" +
-                "        \n" +
-                "\n" +
-                "        <script>\n" +
-                "            var accelerationX = 0;\n" +
-                "            var accelerationY = 0;\n" +
-                "            var accelerationZ = 0;\n" +
-                "            \n" +
-                "            // draw initial graph\n" +
-                "            // use variables to keep updating graph\n" +
-                "\n" +
-                "            setInterval(() => {\n" +
-                "                $(\"#x\").load(\"http://localhost:3030/data/accelerationX\");\n" +
-                "                $(\"#y\").load(\"http://localhost:3030/data/accelerationY\");\n" +
-                "                $(\"#z\").load(\"http://localhost:3030/data/accelerationZ\");\n" +
-                "\n" +
-                "                $.get(\"http://localhost:3030/data/accelerationX\", function(data){\n" +
-                "                    accelerationX = data;\n" +
-                "                });\n" +
-                "                \n" +
-                "                $.get(\"http://localhost:3030/data/accelerationY\", function(data){\n" +
-                "                    accelerationY = data;\n" +
-                "                });\n" +
-                "\n" +
-                "                $.get(\"http://localhost:3030/data/accelerationZ\", function(data){\n" +
-                "                    accelerationZ = data;\n" +
-                "                });\n" +
-                "\n" +
-                "                // accelerationX = $.get(\"http://localhost:3030/data/accelerationX\");\n" +
-                "                // accelerationY = $.get(\"http://localhost:3030/data/accelerationY\");\n" +
-                "                // accelerationZ = $.get(\"http://localhost:3030/data/accelerationZ\");\n" +
-                "                console.log(\"accelerationX: \" + accelerationX);\n" +
-                "                console.log(\"accelerationY: \" + accelerationY);\n" +
-                "                console.log(\"accelerationZ: \" + accelerationZ);\n" +
-                "\n" +
-                "            }, 500);\n" +
-                "            \n" +
-                "        </script>\n" +
-                "    </body>\n" +
-                "</html>"));
-
-        app.get("/data/{name}", ctx -> {
-            if(data.containsKey(ctx.pathParam("name"))) {
-                ctx.result(String.valueOf(data.get(ctx.pathParam("name"))));
-            } else{
-                ctx.result("Please enter a valid name");
-            }
-        });
-
-        app.get("/data", ctx -> {
-            ctx.contentType("application/json").result(gson.toJson(data));
-        });
+        data.put("r", (float) red);
+        data.put("g", (float) green);
+        data.put("b", (float) blue);
+        data.put("strokeWidth", (float) strokeWidth);
+        data.put("opacity", (float) recordingMovement);
 
         // brian code
         display = (TextView) findViewById(R.id.display);
         display.setBackgroundColor(Color.parseColor("lightgrey"));
         currentDisplay[0] = "Status: Stopped\n";
-        currentDisplay[1] = "Color: (" + Red + ", " + Green + ", " + Blue + ")\n";
-        currentDisplay[2] = "Stroke Size: " + strokeSize;
-        currentDisplay[3] = ""; currentDisplay[4] = ""; currentDisplay[5] = "";
+        currentDisplay[1] = "Color: (" + red + ", " + green + ", " + blue + ")\n";
+        currentDisplay[2] = "Stroke Size: " + strokeWidth;
+        currentDisplay[3] = "";
+        currentDisplay[4] = "";
+        currentDisplay[5] = "";
         updateDisplay(display);
 
 
@@ -213,22 +116,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v){
                 if(recordingMovement == 0){
+                    try {
+                        server = new Server(PORT);
+                    } catch(Exception e){
+                        e.printStackTrace();
+                    }
                     startButton.setText("Stop");
                     currentDisplay[0] = "Status: Running\n";
                     recordingMovement = 1;
-                }else{
+                } else{
+                    server.stop();
                     startButton.setText("Start");
                     recordingMovement = 0;
                     currentDisplay[0] = "Status: Stopped\n";
                 }
+                data.put("opacity", (float) recordingMovement);
                 updateDisplay(display);
             }
         });
 
         Slider slider = findViewById(R.id.slider);
         slider.addOnChangeListener((slider1, value, fromUser) -> {
-            strokeSize = (int) value;
-            currentDisplay[2] = "Stroke Size: " + strokeSize + "\n";
+            strokeWidth = (int) value;
+            data.put("strokeWidth", (float) strokeWidth);
+            currentDisplay[2] = "Stroke Size: " + strokeWidth + "\n";
             updateDisplay(display);
         });
     }
@@ -243,11 +154,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 mDefaultColor = color;
-                Alpha = Color.alpha(mDefaultColor);
-                Red = Color.red(mDefaultColor);
-                Green = Color.green(mDefaultColor);
-                Blue = Color.blue(mDefaultColor);
-                currentDisplay[1] = "Color: (" + Red + ", " + Green + ", " + Blue + ")\n";
+                alpha = Color.alpha(mDefaultColor);
+                red = Color.red(mDefaultColor);
+                green = Color.green(mDefaultColor);
+                blue = Color.blue(mDefaultColor);
+
+                data.put("r", (float) red);
+                data.put("g", (float) green);
+                data.put("b", (float) blue);
+
+                currentDisplay[1] = "Color: (" + red + ", " + green + ", " + blue + ")\n";
                 updateDisplay(display);
             }
         });
