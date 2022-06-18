@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <p>Hello world</p>
+        <div id="x"></div>
+        <div id="y"></div>
+        <div id="z"></div>
+
+
+        <script>
+            var accelerationX = 0;
+            var accelerationY = 0;
+            var accelerationZ = 0;
+
+            // draw initial graph
+            // use variables to keep updating graph
+
+            setInterval(() => {
+                $("#x").load("http://localhost:3030/data/accelerationX");
+                $("#y").load("http://localhost:3030/data/accelerationY");
+                $("#z").load("http://localhost:3030/data/accelerationZ");
+
+                $.get("http://localhost:3030/data/accelerationX", function(data){
+                    accelerationX = data;
+                });
+
+                $.get("http://localhost:3030/data/accelerationY", function(data){
+                    accelerationY = data;
+                });
+
+                $.get("http://localhost:3030/data/accelerationZ", function(data){
+                    accelerationZ = data;
+                });
+
+                console.log("accelerationX: " + accelerationX);
+                console.log("accelerationY: " + accelerationY);
+                console.log("accelerationZ: " + accelerationZ);
+
+            }, 500);
+
+        </script>
+    </body>
+</html>
