@@ -1,8 +1,5 @@
 package dubiner.org.wafflehacksapp;
 
-import android.net.wifi.WifiManager;
-import android.text.format.Formatter;
-
 import io.javalin.Javalin;
 
 public class Server {
@@ -10,9 +7,16 @@ public class Server {
 
     public Server(int port){
         this.port = port;
-        Javalin app = Javalin.create().start(port);
+        Javalin app = Javalin.create();
         app.get("/", ctx -> ctx.result("Hello world"));
-        System.out.println("Server started...");
+
+        app.ws("/test", ws -> {
+            ws.onConnect(ctx -> {
+                ctx.send("Hello WebSocket");
+                System.out.println("connected");
+            });
+        });
+        app.start(port);
     }
 
 

@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor accelerometer;
 
-    private final int PORT = 80;
+    private final int PORT = 3030;
 
     private float accelerationX, accelerationY, accelerationZ;
     @Override
@@ -36,9 +36,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-        Javalin app = Javalin.create().start(PORT);
-        app.get("/", ctx -> ctx.result("Hello world"));
-        System.out.println("Server started...");
+        Server server = new Server(PORT);
 
 
     }
@@ -73,10 +71,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager.unregisterListener(this);
     }
 
-    public String initIpAddress() {
-        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-        System.out.println("Server running at: " + ip + ":" + PORT);
-        return "http://" + ip + ":" + PORT + "/";
-    }
+//    public String initIpAddress() {
+//        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+//        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+//        System.out.println("Server running at: " + ip + ":" + PORT);
+//        return "http://" + ip + ":" + PORT + "/";
+//    }
 }
