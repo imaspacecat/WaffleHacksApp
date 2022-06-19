@@ -10,7 +10,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -62,12 +64,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     TextView colorDisplay;
 
+    public static String address;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        address = ip + ":" + PORT;
 //        colorDisplay = (TextView) findViewById(R.id.colorDisplay);
 //        colorDisplay.setBackgroundColor(0xffff0000);
 
@@ -130,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 if(recordingMovement == 0){
                     try {
                         server = new Server(PORT);
+                        initIpAddress();
                     } catch(Exception e){
                         e.printStackTrace();
                     }
@@ -273,10 +281,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
         serverStarted = !serverStarted;
     }
-//    public String initIpAddress() {
-//        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-//        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-//        System.out.println("Server running at: " + ip + ":" + PORT);
-//        return "http://" + ip + ":" + PORT + "/";
-//    }
+    public String initIpAddress() {
+        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
+        System.out.println("Server running at: " + ip + ":" + PORT);
+        return ip + ":" + PORT + "/";
+    }
 }

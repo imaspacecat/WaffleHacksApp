@@ -66,9 +66,9 @@ public class Server {
                 "        Plotly.newPlot(\"test\", [data], { height: 640 });\n" +
                 "\n" +
                 "        setInterval(() => {\n" +
-                "            $(\"#x\").load(\"http://localhost:3030/data/accelerationX\");\n" +
-                "            $(\"#y\").load(\"http://localhost:3030/data/accelerationY\");\n" +
-                "            $(\"#z\").load(\"http://localhost:3030/data/accelerationZ\");\n" +
+                "            $(\"#x\").load(\"http://" + MainActivity.address + "/data/accelerationX\");\n" +
+                "            $(\"#y\").load(\"http://" + MainActivity.address + "/data/accelerationY\");\n" +
+                "            $(\"#z\").load(\"http://" + MainActivity.address + "/data/accelerationZ\");\n" +
                 "\n" +
                 "            // $.get(\"http://localhost:3030/data/accelerationX\", function (data) {\n" +
                 "            //     accelerationX = data;\n" +
@@ -86,7 +86,7 @@ public class Server {
                 "            console.log(\"accelerationY: \" + accelerationY);\n" +
                 "            console.log(\"accelerationZ: \" + accelerationZ);\n" +
                 "\n" +
-                "            $.getJSON(\"http://localhost:3030/data/\", function (data) {\n" +
+                "            $.getJSON(\"http://" + MainActivity.address + "/data/\", function (data) {\n" +
                 "                json = data;\n" +
                 "            });\n" +
                 "            console.log(json);\n" +
@@ -115,9 +115,9 @@ public class Server {
                 "\n" +
                 "            Plotly.extendTraces(\"test\",\n" +
                 "                {\n" +
-                "                    x: [[accelarationToPos(accelerationX, previousAccelerationX, 1)]],\n" +
-                "                    y: [[accelarationToPos(accelerationY, previousAccelerationY, 1)]],\n" +
-                "                    z: [[accelarationToPos(accelerationZ, previousAccelerationZ, 1)]],\n" +
+                "                    x: [[accelarationToPos(accelerationX, previousAccelerationX, 0.2)]],\n" +
+                "                    y: [[accelarationToPos(accelerationY, previousAccelerationY, 0.2)]],\n" +
+                "                    z: [[accelarationToPos(accelerationZ, previousAccelerationZ, 0.2)]],\n" +
                 "                    // opacity: [opacity],\n" +
                 "                    // line: {\n" +
                 "                    //     width: [lineWidth],\n" +
@@ -130,7 +130,7 @@ public class Server {
                 "            previousAccelerationY = accelerationY;\n" +
                 "            previousAccelerationZ = accelerationZ;\n" +
                 "\n" +
-                "        }, 1000);\n" +
+                "        }, 200);\n" +
                 "\n" +
                 "        function accelarationToPos(a, previous, T) {\n" +
                 "            return a * (Math.pow(T, 2)) + previous;\n" +
