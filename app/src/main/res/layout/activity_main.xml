@@ -6,50 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textAccelerationX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Acceleration X: 0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textAccelerationY"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Acceleration Y: 0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAccelerationX" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/textAccelerationX"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:text="Acceleration X: 0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
-        android:id="@+id/textAccelerationZ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Acceleration Z: 0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textAccelerationY" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/textAccelerationY"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:text="Acceleration Y: 0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textAccelerationX" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textAccelerationZ"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:text="Acceleration Z: 0"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textAccelerationY" />-->
 
 
     <Button
         android:id="@+id/start"
         android:layout_width="180dp"
         android:layout_height="103dp"
-        android:layout_marginStart="115dp"
-        android:layout_marginEnd="115dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="25dp"
         android:text="@string/start_text"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/debug"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -72,72 +70,66 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--    <Button-->
+    <!--        android:id="@+id/colorPicker"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="132dp"-->
+    <!--        android:layout_marginTop="32dp"-->
+    <!--        android:text="@string/color_picker"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--    <com.google.android.material.slider.Slider-->
+    <!--        android:id="@+id/slider"-->
+    <!--        android:layout_width="250dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="25dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:layout_marginEnd="25dp"-->
+    <!--        android:stepSize="1"-->
+    <!--        android:textAlignment="center"-->
+    <!--        android:value="6"-->
+    <!--        android:valueFrom="1"-->
+    <!--        android:valueTo="25"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.459"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/colorPicker"-->
+    <!--        app:layout_constraintVertical_bias="0.0"-->
+    <!--        tools:ignore="SpeakableTextPresentCheck" />-->
+
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/sliderCaption"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginStart="26dp"-->
+    <!--        android:layout_marginTop="34dp"-->
+    <!--        android:layout_marginEnd="26dp"-->
+    <!--        android:text="@string/slider_caption"-->
+    <!--        android:textSize="18sp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/slider" />-->
+
     <TextView
         android:id="@+id/display"
         android:layout_width="300dp"
         android:layout_height="150dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="40dp"
         android:text=""
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.356" />
-
-<!--    <Button-->
-<!--        android:id="@+id/colorPicker"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="132dp"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:text="@string/color_picker"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <com.google.android.material.slider.Slider-->
-<!--        android:id="@+id/slider"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="25dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginEnd="25dp"-->
-<!--        android:stepSize="1"-->
-<!--        android:textAlignment="center"-->
-<!--        android:value="6"-->
-<!--        android:valueFrom="1"-->
-<!--        android:valueTo="25"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.459"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/colorPicker"-->
-<!--        app:layout_constraintVertical_bias="0.0"-->
-<!--        tools:ignore="SpeakableTextPresentCheck" />-->
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/sliderCaption"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginStart="26dp"-->
-<!--        android:layout_marginTop="34dp"-->
-<!--        android:layout_marginEnd="26dp"-->
-<!--        android:text="@string/slider_caption"-->
-<!--        android:textSize="18sp"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="@+id/slider" />-->
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/portInput"
         android:layout_width="200dp"
-        android:layout_height="53dp"
+        android:layout_height="50dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="40dp"
         android:ems="10"
         android:hint="3030"
         android:inputType="number"
@@ -154,9 +146,7 @@
         android:id="@+id/serverDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="10dp"
         android:text="Connect to a server!"
         android:textAlignment="center"
         android:textSize="24sp"
@@ -167,22 +157,36 @@
     <Button
         android:id="@+id/serverButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="40dp"
         android:text="Connect"
         app:layout_constraintBottom_toTopOf="@+id/start"
         app:layout_constraintEnd_toEndOf="parent" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/colorDisplay"-->
-<!--        android:layout_width="30dp"-->
-<!--        android:layout_height="30dp"-->
-<!--        android:layout_marginTop="40dp"-->
-<!--        android:layout_marginEnd="15dp"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/colorPicker"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="177dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="177dp"
+        android:text="3D Paper"
+        android:textAlignment="center"
+        android:textSize="60sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!--    <TextView-->
+    <!--        android:id="@+id/colorDisplay"-->
+    <!--        android:layout_width="30dp"-->
+    <!--        android:layout_height="30dp"-->
+    <!--        android:layout_marginTop="40dp"-->
+    <!--        android:layout_marginEnd="15dp"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/colorPicker"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

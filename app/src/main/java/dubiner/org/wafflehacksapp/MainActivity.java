@@ -78,12 +78,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //        colorDisplay = (TextView) findViewById(R.id.colorDisplay);
 //        colorDisplay.setBackgroundColor(0xffff0000);
 
-        textAccelerationX = findViewById(R.id.textAccelerationX);
-        textAccelerationY = findViewById(R.id.textAccelerationY);
-        textAccelerationZ = findViewById(R.id.textAccelerationZ);
+//        textAccelerationX = findViewById(R.id.textAccelerationX);
+//        textAccelerationY = findViewById(R.id.textAccelerationY);
+//        textAccelerationZ = findViewById(R.id.textAccelerationZ);
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
 
         data = new LinkedHashMap<>();
 //        data.put("r", (float) red);
@@ -220,9 +220,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         data.put("accelerationX", event.values[0]);
         data.put("accelerationY", event.values[1]);
         data.put("accelerationZ", event.values[2]);
-        textAccelerationX.setText("Acceleration X: " + event.values[0]);
-        textAccelerationY.setText("Acceleration Y: " + event.values[1]);
-        textAccelerationZ.setText("Acceleration Z: " + event.values[2]);
+//        textAccelerationX.setText("Acceleration X: " + event.values[0]);
+//        textAccelerationY.setText("Acceleration Y: " + event.values[1]);
+//        textAccelerationZ.setText("Acceleration Z: " + event.values[2]);
 
         if(debugMode) {
             currentDisplay[3] = "\nAccelX: " + event.values[0];

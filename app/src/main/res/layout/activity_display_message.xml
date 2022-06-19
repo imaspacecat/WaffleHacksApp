@@ -27,11 +27,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:text="    - The Start/Stop Button toggles the drawing tool to start and stop drawing lines. While the tool is running, all movements will be drawn.\n\n
-
-    - The color picker allows the color of the line being drawn to be changed\n\n
-
-    - The stroke size slider changes the width of the line being drawn. A lower number creates a thinner line while a larger number creates a thicker line."
+        android:text="    -The connect option allows you to input a port number. When you press the connect button, the app sets the port that the server will run on\n\n
+        -The start button connects the app to the server.\n\n
+        -The debug mode button displays the individual acceleration values being detected by the phone."
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

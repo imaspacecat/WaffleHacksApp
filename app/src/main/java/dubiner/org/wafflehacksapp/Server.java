@@ -24,22 +24,46 @@ public class Server {
                 "</head>\n" +
                 "\n" +
                 "<body>\n" +
-                "    <p>Hello world</p>\n" +
-                "    <div id=\"x\"></div>\n" +
-                "    <div id=\"y\"></div>\n" +
-                "    <div id=\"z\"></div>\n" +
-                "    <div id=\"test\"></div>\n" +
+                "    <p>Acceleration X: </p><div id=\"x\"></div>\n" +
+                "    <p>Acceleration Y: </p><div id=\"y\"></div>\n" +
+                "    <p>Acceleration Z: </p><div id=\"z\"></div><br>\n" +
+                "    <button type=\"button\" id=\"pause\" onclick=\"pause()\"> Pause</button>\n" +
+                "    <div id=\"test\"></div>\n"     +
                 "\n" +
                 "\n" +
                 "    <script>\n" +
-                "        var accelerationX = 0;\n" +
-                "        var accelerationY = 0;\n" +
-                "        var accelerationZ = 0;\n" +
+                "       var isPaused = 0;" +
+                "       function pause(){" +
+                "           isPaused++" +
+                "}\n"+
+
+                "var sumX = 0;\n"+
+                "var sumY = 0;\n"+
+                "var sumZ = 0;\n"+
+                "var averageListX = [0,0,0,0,0];\n"+
+                "var averageListY = [0,0,0,0,0];\n"+
+                "var averageListZ = [0,0,0,0,0];\n"+
+
+
+                "         var aX = 0;\n" +
+                "            var aY = 0;\n" +
+                "            var aZ = 0;\n" +
                 "\n" +
-                "        // use variables to keep updating graph\n" +
-                "        var previousAccelerationX = accelerationX;\n" +
-                "        var previousAccelerationY = accelerationY;\n" +
-                "        var previousAccelerationZ = accelerationZ;\n" +
+                "            var vX = 0;\n" +
+                "            var vY = 0;\n" +
+                "            var vZ = 0;\n" +
+                "\n" +
+                "            var pvX = 0;\n" +
+                "            var pvY = 0;\n" +
+                "            var pvZ = 0;\n" +
+                "\n" +
+                "            var X = 0;\n" +
+                "            var Y = 0;\n" +
+                "            var Z = 0;\n" +
+                "\n" +
+                "            var pX = 0;\n" +
+                "            var pY = 0;\n" +
+                "            var pZ = 0;\n" +
                 "        var r = 0;\n" +
                 "        var g = 0;\n" +
                 "        var b = 0;\n" +
@@ -52,9 +76,9 @@ public class Server {
                 "        var data = {\n" +
                 "            type: 'scatter3d',\n" +
                 "            mode: 'lines',\n" +
-                "            x: [accelerationX],\n" +
-                "            y: [accelerationY],\n" +
-                "            z: [accelerationZ],\n" +
+                "            x: [aX],\n" +
+                "            y: [aY],\n" +
+                "            z: [aZ],\n" +
                 "            opacity: [opacity],\n" +
                 "            line: {\n" +
                 "                width: lineWidth,\n" +
@@ -64,8 +88,10 @@ public class Server {
                 "        }\n" +
                 "\n" +
                 "        Plotly.newPlot(\"test\", [data], { height: 640 });\n" +
+                "\n " +
                 "\n" +
                 "        setInterval(() => {\n" +
+                "          if(isPaused%2 == 0){\n" +
                 "            $(\"#x\").load(\"http://" + MainActivity.address + "/data/accelerationX\");\n" +
                 "            $(\"#y\").load(\"http://" + MainActivity.address + "/data/accelerationY\");\n" +
                 "            $(\"#z\").load(\"http://" + MainActivity.address + "/data/accelerationZ\");\n" +
@@ -82,9 +108,9 @@ public class Server {
                 "            //     accelerationZ = data;\n" +
                 "            // });\n" +
                 "\n" +
-                "            console.log(\"accelerationX: \" + accelerationX);\n" +
-                "            console.log(\"accelerationY: \" + accelerationY);\n" +
-                "            console.log(\"accelerationZ: \" + accelerationZ);\n" +
+                "            //console.log(\"accelerationX: \" + accelerationX);\n" +
+                "            //console.log(\"accelerationY: \" + accelerationY);\n" +
+                "            //console.log(\"accelerationZ: \" + accelerationZ);\n" +
                 "\n" +
                 "            $.getJSON(\"http://" + MainActivity.address + "/data/\", function (data) {\n" +
                 "                json = data;\n" +
@@ -102,22 +128,55 @@ public class Server {
                 "            // };\n" +
                 "\n" +
                 "\n" +
-                "            accelerationX = json.accelerationX;\n" +
-                "            accelerationY = json.accelerationY;\n" +
-                "            accelerationZ = json.accelerationZ;\n" +
+                "            aX = Math.round(json.accelerationX);\n" +
+                "            aY = Math.round(json.accelerationY);\n" +
+                "            aZ = Math.round(json.accelerationZ);\n" +
                 "            r = json.r;\n" +
                 "            g = json.g;\n" +
                 "            b = json.b;\n" +
                 "            opacity = json.opacity;\n" +
                 "            lineWidth = json.strokeWidth;\n" +
-                "\n" +
-                "\n" +
-                "\n" +
+                "" +
+                "            " +
+
+
+
+                "            averageListX.push(aX);\n" +
+                "            sumX-=averageListX[0];\n" +
+                "            averageListX.shift();\n" +
+                "            sumX+=aX;\n" +
+                "            averageListY.push(aY);\n" +
+                "            sumY-=averageListY[0];\n" +
+                "            averageListY.shift();\n" +
+                "            sumY+=aY;\n" +
+                "            averageListZ.push(aZ);\n" +
+                "            sumZ-=averageListZ[0];\n" +
+                "            averageListZ.shift();\n" +
+                "            sumZ+=aZ;\n" +
+
+
+
+                "            aX = sumX/5;\n"+
+                "            aY = sumY/5;\n"+
+                "            aZ = sumZ/5;\n"+
+
+
+
+                "               \n" +
+                "            console.log(\"aX: \" + aX);   \n" +
+                "            console.log(\"vX: \" + vX);   \n" +
+                "            console.log(\"X: \" + X);   \n" +
+                "            vX = accelarationToVelocity(aX, pvX, 0.001)\n" +
+                "            vY = accelarationToVelocity(aY, pvY, 0.001)\n" +
+                "            vZ = accelarationToVelocity(aZ, pvZ, 0.001) \n" +
+                "            X = velocityToPos(vX, pX, 0.001);\n" +
+                "            Y = velocityToPos(vY, pY, 0.001);\n" +
+                "            Z = velocityToPos(vZ, pZ, 0.001);\n" +
                 "            Plotly.extendTraces(\"test\",\n" +
                 "                {\n" +
-                "                    x: [[accelarationToPos(accelerationX, previousAccelerationX, 0.2)]],\n" +
-                "                    y: [[accelarationToPos(accelerationY, previousAccelerationY, 0.2)]],\n" +
-                "                    z: [[accelarationToPos(accelerationZ, previousAccelerationZ, 0.2)]],\n" +
+                "                    x: [[X]],\n" +
+                "                    y: [[Y]],\n" +
+                "                    z: [[Z]],\n" +
                 "                    // opacity: [opacity],\n" +
                 "                    // line: {\n" +
                 "                    //     width: [lineWidth],\n" +
@@ -126,15 +185,23 @@ public class Server {
                 "                    // }\n" +
                 "                }, [0]);\n" +
                 "\n" +
-                "            previousAccelerationX = accelerationX;\n" +
-                "            previousAccelerationY = accelerationY;\n" +
-                "            previousAccelerationZ = accelerationZ;\n" +
+                "            pX = X;\n" +
+                "            pY = Y;\n" +
+                "            pZ = Z;\n" +
+                "                pvX =  vX;\n" +
+                "                pvY =  vY;\n" +
+                "                pvZ =  vZ;\n" +
                 "\n" +
-                "        }, 200);\n" +
+                "        }}, 1);\n" +
                 "\n" +
-                "        function accelarationToPos(a, previous, T) {\n" +
-                "            return a * (Math.pow(T, 2)) + previous;\n" +
-                "        }\n" +
+                "        function accelarationToVelocity(a, pV, t) {\n" +
+                "            var v = a*t;\n" +
+                "            return (v + pV)*0.9\n" +
+                "           }\n"+
+                "         function velocityToPos(v, pD, t){\n" +
+                "                var d = v*t;\n" +
+                "                return d + pD;\n" +
+                "            }\n" +
                 "\n" +
                 "    </script>\n" +
                 "</body>\n" +
