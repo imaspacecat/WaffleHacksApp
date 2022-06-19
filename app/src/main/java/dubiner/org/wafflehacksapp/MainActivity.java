@@ -12,7 +12,9 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.slider.Slider;
@@ -52,11 +54,22 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String[] currentDisplay = new String[6];
     private Server server;
 
+    int portNumber = 3030;
+    EditText portInput;
+    Button serverButton;
+    boolean serverStarted = false;
+    TextView serverDisplay;
+
+    TextView colorDisplay;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        colorDisplay = (TextView) findViewById(R.id.colorDisplay);
+//        colorDisplay.setBackgroundColor(0xffff0000);
 
         textAccelerationX = findViewById(R.id.textAccelerationX);
         textAccelerationY = findViewById(R.id.textAccelerationY);
@@ -66,32 +79,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         data = new LinkedHashMap<>();
-        data.put("r", (float) red);
-        data.put("g", (float) green);
-        data.put("b", (float) blue);
-        data.put("strokeWidth", (float) strokeWidth);
-        data.put("opacity", (float) recordingMovement);
+//        data.put("r", (float) red);
+//        data.put("g", (float) green);
+//        data.put("b", (float) blue);
+//        data.put("strokeWidth", (float) strokeWidth);
+//        data.put("opacity", (float) recordingMovement);
 
         // brian code
         display = (TextView) findViewById(R.id.display);
         display.setBackgroundColor(Color.parseColor("lightgrey"));
         currentDisplay[0] = "Status: Stopped\n";
-        currentDisplay[1] = "Color: (" + red + ", " + green + ", " + blue + ")\n";
-        currentDisplay[2] = "Stroke Size: " + strokeWidth;
+//        currentDisplay[1] = "Color: (" + red + ", " + green + ", " + blue + ")\n";
+//        currentDisplay[2] = "Stroke Size: " + strokeWidth;
         currentDisplay[3] = "";
         currentDisplay[4] = "";
         currentDisplay[5] = "";
         updateDisplay(display);
 
 
-        mDefaultColor = 0xffff0000;
-        mButton = (Button) findViewById(R.id.colorPicker);
-        mButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openColorPicker();
-            }
-        });
+//        mDefaultColor = 0xffff0000;
+//        mButton = (Button) findViewById(R.id.colorPicker);
+//        mButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v){
+//                openColorPicker();
+//            }
+//        });
 
         button = (Button) findViewById(R.id.info);
         button.setOnClickListener(new View.OnClickListener(){
@@ -106,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v){
                 debugMode = !debugMode;
-                debugPressed();
             }
         });
 
@@ -135,54 +147,62 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        Slider slider = findViewById(R.id.slider);
-        slider.addOnChangeListener((slider1, value, fromUser) -> {
-            strokeWidth = (int) value;
-            data.put("strokeWidth", (float) strokeWidth);
-            currentDisplay[2] = "Stroke Size: " + strokeWidth + "\n";
-            updateDisplay(display);
-        });
-    }
-
-    public void openColorPicker(){
-        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, mDefaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+//        Slider slider = findViewById(R.id.slider);
+//        slider.addOnChangeListener((slider1, value, fromUser) -> {
+//            strokeWidth = (int) value;
+//            data.put("strokeWidth", (float) strokeWidth);
+//            currentDisplay[2] = "Stroke Size: " + strokeWidth + "\n";
+//            updateDisplay(display);
+//        });
+        portInput = (EditText) findViewById(R.id.portInput);
+        serverButton = (Button) findViewById(R.id.serverButton);
+        serverButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onCancel(AmbilWarnaDialog dialog) {
-
-            }
-
-            @Override
-            public void onOk(AmbilWarnaDialog dialog, int color) {
-                mDefaultColor = color;
-                alpha = Color.alpha(mDefaultColor);
-                red = Color.red(mDefaultColor);
-                green = Color.green(mDefaultColor);
-                blue = Color.blue(mDefaultColor);
-
-                data.put("r", (float) red);
-                data.put("g", (float) green);
-                data.put("b", (float) blue);
-
-                currentDisplay[1] = "Color: (" + red + ", " + green + ", " + blue + ")\n";
-                updateDisplay(display);
+            public void onClick(View v){
+                serverButtonClicked(v);
             }
         });
-        colorPicker.show();
 
+        serverDisplay = (TextView) findViewById(R.id.serverDisplay);
     }
+
+//    public void openColorPicker(){
+//        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, mDefaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+//            @Override
+//            public void onCancel(AmbilWarnaDialog dialog) {
+//
+//            }
+//
+//            @Override
+//            public void onOk(AmbilWarnaDialog dialog, int color) {
+//                mDefaultColor = color;
+//                alpha = Color.alpha(mDefaultColor);
+//                red = Color.red(mDefaultColor);
+//                green = Color.green(mDefaultColor);
+//                blue = Color.blue(mDefaultColor);
+//
+//                data.put("r", (float) red);
+//                data.put("g", (float) green);
+//                data.put("b", (float) blue);
+//
+//                currentDisplay[1] = "Color: (" + red + ", " + green + ", " + blue + ")\n";
+//                updateDisplay(display);
+//
+//                colorDisplay.setBackgroundColor(mDefaultColor);
+//            }
+//        });
+//        colorPicker.show();
+//    }
 
     public void infoButtonPressed(){
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         startActivity(intent);
     }
 
-    public void debugPressed(){
-        debugMode = !debugMode;
-    }
 
     @SuppressLint("SetTextI18n")
     private void updateDisplay(TextView display){
-        display.setText(currentDisplay[0] + currentDisplay[1] + currentDisplay[2] + currentDisplay[3]
+        display.setText(currentDisplay[0] + currentDisplay[3]
                 + currentDisplay[4] + currentDisplay[5]);
     }
 
@@ -196,6 +216,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         textAccelerationY.setText("Acceleration Y: " + event.values[1]);
         textAccelerationZ.setText("Acceleration Z: " + event.values[2]);
 
+        if(debugMode) {
+            currentDisplay[3] = "\nAccelX: " + event.values[0];
+            currentDisplay[4] = "\nAccelY: " + event.values[1];
+            currentDisplay[5] = "\nAccelZ: " + event.values[2];
+            updateDisplay(display);
+        } else{
+            currentDisplay[3] = "";
+            currentDisplay[4] = "";
+            currentDisplay[5] = "";
+            updateDisplay(display);
+        }
 
     }
 
@@ -216,6 +247,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager.unregisterListener(this);
     }
 
+    public void serverButtonClicked(View v){
+        if(!serverStarted){
+
+            InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+
+            String input = portInput.getText().toString();
+            if(input.length() == 0){
+                input = "3030";
+                portNumber = 3030;
+            }else{
+                portNumber = Integer.parseInt(input);
+            }
+
+            input = "http://localhost:" + input + "/";
+
+            serverDisplay.setText("Address: "+input);
+            serverButton.setText("Disconnect");
+            portInput.setFocusable(false);
+        }else{
+            serverDisplay.setText("Connect to a server!");
+            serverButton.setText("Connect");
+            portInput.setFocusableInTouchMode(true);
+        }
+        serverStarted = !serverStarted;
+    }
 //    public String initIpAddress() {
 //        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
 //        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());

@@ -77,57 +77,112 @@
         android:layout_width="300dp"
         android:layout_height="150dp"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="50dp"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.356" />
 
-    <Button
-        android:id="@+id/colorPicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/color_picker"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <Button-->
+<!--        android:id="@+id/colorPicker"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="132dp"-->
+<!--        android:layout_marginTop="32dp"-->
+<!--        android:text="@string/color_picker"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="25dp"
-        android:stepSize="1"
-        android:value="6"
-        android:valueFrom="1"
-        android:valueTo="25"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+<!--    <com.google.android.material.slider.Slider-->
+<!--        android:id="@+id/slider"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="25dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="25dp"-->
+<!--        android:stepSize="1"-->
+<!--        android:textAlignment="center"-->
+<!--        android:value="6"-->
+<!--        android:valueFrom="1"-->
+<!--        android:valueTo="25"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.459"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/colorPicker"-->
+<!--        app:layout_constraintVertical_bias="0.0"-->
+<!--        tools:ignore="SpeakableTextPresentCheck" />-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/sliderCaption"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_marginStart="26dp"-->
+<!--        android:layout_marginTop="34dp"-->
+<!--        android:layout_marginEnd="26dp"-->
+<!--        android:text="@string/slider_caption"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/slider" />-->
+
+    <EditText
+        android:id="@+id/portInput"
+        android:layout_width="200dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="28dp"
+        android:ems="10"
+        android:hint="3030"
+        android:inputType="number"
+        android:maxLength="4"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/start"
+        app:layout_constraintEnd_toStartOf="@+id/serverButton"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorPicker"
-        app:layout_constraintVertical_bias="0.0"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/sliderCaption"
+        android:id="@+id/serverDisplay"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="34dp"
-        android:layout_marginEnd="26dp"
-        android:text="@string/slider_caption"
-        android:textSize="18sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="6dp"
+        android:text="Connect to a server!"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/start"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/slider" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/serverButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="28dp"
+        android:text="Connect"
+        app:layout_constraintBottom_toTopOf="@+id/start"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/colorDisplay"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:layout_marginEnd="15dp"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/colorPicker"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
